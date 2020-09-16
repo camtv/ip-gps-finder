@@ -15,6 +15,8 @@ namespace CamTV
             SetEndPointHandler("/api/ipgpsfinder/v1/getip", GetIp);
 
             SetEndPointHandler("/api/ipgpsfinder/v1/getdistance", GetDistance);
+
+            SetEndPointHandler("/api/ipgpsfinder/v1/locations/list", List);
         }
 
         override protected Int64 ValidateSession()
@@ -85,6 +87,15 @@ namespace CamTV
             {
                 Distance = distance
             };
+            StatusCode = HTTPStatusCode.OK_200;
+        }
+
+        [HTTPMethod(Public = true, Type = CRequest.Method.POST)]
+        void List()
+        {
+            var vLocations = Locations.List(Db);
+
+            Body = vLocations;
             StatusCode = HTTPStatusCode.OK_200;
         }
     }
