@@ -67,7 +67,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="IpGPSFinder.cs" />
-    <Compile Include="Locations.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sets.cs" />
@@ -108,6 +107,10 @@
       <Project>{db6fc1f6-2c37-41cf-af62-97b3696abe71}</Project>
       <Name>CTVLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libs\DAL\DAL.csproj">
+      <Project>{220a46bf-ba45-40c4-82ef-cbf9472ced36}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libs\IO_HttpdLib\IO_HttpdLib.csproj">
       <Project>{bc53dd33-c2e6-4a4e-baae-962aedda17e4}</Project>
       <Name>IO_HttpdLib</Name>
@@ -124,6 +127,7 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Device" />
   </ItemGroup>
   <ItemGroup>

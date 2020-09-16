@@ -1,8 +1,8 @@
+using DAL;
 using Helpers;
 using HttpdLib;
 using LocationLib;
 using System;
-using System.Device.Location;
 
 namespace CamTV
 {
@@ -16,7 +16,10 @@ namespace CamTV
 
             SetEndPointHandler("/api/ipgpsfinder/v1/getdistance", GetDistance);
 
+            SetEndPointHandler("/api/ipgpsfinder/v1/locations/new", NewLocation);
             SetEndPointHandler("/api/ipgpsfinder/v1/locations/list", List);
+            SetEndPointHandler("/api/ipgpsfinder/v1/locations/edit", EditLocation);
+            SetEndPointHandler("/api/ipgpsfinder/v1/locations/delete", DeleteLocation);
         }
 
         override protected Int64 ValidateSession()
@@ -91,11 +94,70 @@ namespace CamTV
         }
 
         [HTTPMethod(Public = true, Type = CRequest.Method.POST)]
+        void NewLocation()
+        {
+            String MissingParameter = CheckMissingParams(new String[] { "Description", "Latitude", "Longitude" });
+            if (MissingParameter != null)
+                ThrowError(HTTPStatusCode.Bad_Request_400, MissingParameter);
+
+            var desciption = Types.ToString(Params["Description"]);
+            var latitude = Types.ToDouble(Params["Latitude"], 0);
+            var longitude = Types.ToDouble(Params["Longitude"], 0);
+
+            var newLocationId = Locations.New(desciption, latitude, longitude, Db);
+
+            Body = new
+            {
+                Id = newLocationId
+            };
+            StatusCode = HTTPStatusCode.OK_200;
+        }
+
+        [HTTPMethod(Public = true, Type = CRequest.Method.POST)]
         void List()
         {
             var vLocations = Locations.List(Db);
 
             Body = vLocations;
+            StatusCode = HTTPStatusCode.OK_200;
+        }
+
+        [HTTPMethod(Public = true, Type = CRequest.Method.POST)]
+        void EditLocation()
+        {
+            String MissingParameter = CheckMissingParams(new String[] { "ID", "Description", "Latitude", "Longitude" });
+            if (MissingParameter != null)
+                ThrowError(HTTPStatusCode.Bad_Request_400, MissingParameter);
+
+            var id = Types.ToInt(Params["ID"]);
+            var desciption = Types.ToString(Params["Description"]);
+            var latitude = Types.ToDouble(Params["Latitude"], 0);
+            var longitude = Types.ToDouble(Params["Longitude"], 0);
+
+            var rowAffected = Locations.Edit(id, desciption, latitude, longitude, Db);
+
+            Body = new
+            {
+                Rows = rowAffected
+            };
+            StatusCode = HTTPStatusCode.OK_200;
+        }
+
+        [HTTPMethod(Public = true, Type = CRequest.Method.POST)]
+        void DeleteLocation()
+        {
+            String MissingParameter = CheckMissingParams(new String[] { "ID" });
+            if (MissingParameter != null)
+                ThrowError(HTTPStatusCode.Bad_Request_400, MissingParameter);
+
+            var id = Types.ToInt(Params["ID"]);
+
+            var rowAffected = Locations.Delete(id, Db);
+
+            Body = new
+            {
+                Rows = rowAffected
+            };
             StatusCode = HTTPStatusCode.OK_200;
         }
     }
