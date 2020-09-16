@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpGPSFinder", "Exes\IpGPSFinder\IpGPSFinder.csproj", "{524D46AC-39CE-4210-879F-344D3E3F9411}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTVLib", "Libs\CTVLib\CTVLib.csproj", "{DB6FC1F6-2C37-41CF-AF62-97B3696ABE71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IO_HttpdLib", "Libs\IO_HttpdLib\IO_HttpdLib.csproj", "{BC53DD33-C2E6-4A4E-BAAE-962AEDDA17E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{524D46AC-39CE-4210-879F-344D3E3F9411}.Debug|x64.ActiveCfg = Debug|x64
+		{524D46AC-39CE-4210-879F-344D3E3F9411}.Debug|x64.Build.0 = Debug|x64
+		{524D46AC-39CE-4210-879F-344D3E3F9411}.Release|x64.ActiveCfg = Release|x64
+		{524D46AC-39CE-4210-879F-344D3E3F9411}.Release|x64.Build.0 = Release|x64
+		{DB6FC1F6-2C37-41CF-AF62-97B3696ABE71}.Debug|x64.ActiveCfg = Debug|x64
+		{DB6FC1F6-2C37-41CF-AF62-97B3696ABE71}.Debug|x64.Build.0 = Debug|x64
+		{DB6FC1F6-2C37-41CF-AF62-97B3696ABE71}.Release|x64.ActiveCfg = Release|x64
+		{DB6FC1F6-2C37-41CF-AF62-97B3696ABE71}.Release|x64.Build.0 = Release|x64
+		{BC53DD33-C2E6-4A4E-BAAE-962AEDDA17E4}.Debug|x64.ActiveCfg = Debug|x64
+		{BC53DD33-C2E6-4A4E-BAAE-962AEDDA17E4}.Debug|x64.Build.0 = Debug|x64
+		{BC53DD33-C2E6-4A4E-BAAE-962AEDDA17E4}.Release|x64.ActiveCfg = Release|x64
+		{BC53DD33-C2E6-4A4E-BAAE-962AEDDA17E4}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E549E10B-749A-4C8F-B82F-E6217C7923DD}
+	EndGlobalSection
+EndGlobal

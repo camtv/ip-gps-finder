@@ -1,0 +1,365 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Vereyon.Web.HtmlSanitizer</name>
+    </assembly>
+    <members>
+        <member name="T:Vereyon.Web.HtmlSanitizer">
+            <summary>
+            The HtmlSanitizer class implements a rule based HTML sanitizer.
+            </summary>
+            <remarks>
+            Inspired by: https://htmlagilitypack.codeplex.com/discussions/215674
+                    and: https://github.com/xing/wysihtml5/blob/master/parser_rules/simple.js
+            </remarks>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizer.SanitizeCssClasses">
+            <summary>
+            Determines if CSS classes are sanitized.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizer.AllowedCssClasses">
+            <summary>
+            Sets which CSS classes are allowed on any HTML tag.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizer.Rules">
+            <summary>
+            Sets which HTML sanitation rules are to be applied to a tag. Tag name as key, rule as value.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizer.AttributeCheckRegistry">
+            <summary>
+            Contains sanitation checks supported HtmlSanitizer class instance.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizer.RemoveComments">
+            <summary>
+            Gets / sets if any HTML comments should be removed.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizer.WhiteListMode">
+            <summary>
+            Gets / sets if the sanitizer operates in white list mode. If so, only tags for which rules are
+            set and attributes for which checks are set are preserved. Defaults to true.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizer.EncodeHtmlEntities">
+            <summary>
+            Gets / sets if HTML entities in all text should be encoded.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizer.MaxRecursionDepth">
+            <summary>
+            Gets / sets the maximum depth in the DOM tree which is traversed. This limit is introduced to prevent stack overflows.
+            </summary>
+            <remarks>
+            Problems tend to start above a recursion depth of about 75 where the ASP.NET runtime stack nears exhaustion.
+            </remarks>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizer.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:Vereyon.Web.HtmlSanitizer"/> class.</summary>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizer.RegisterChecks">
+            <summary>
+            Registers the out of the box supported sanitation checks.
+            </summary>
+        </member>
+        <member name="T:Vereyon.Web.HtmlSanitizer.HtmlSanitizerAttributeCheckHandler">
+            <summary>
+            A attribute check handler returns false if the attribute is to be rejected and removed.
+            </summary>
+            <param name="attribute"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Vereyon.Web.HtmlSanitizer.AllowedUriSchemes">
+            <summary>
+            Collection of the allowed URI schemes.
+            </summary>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizer.AttributeUrlCheck(HtmlAgilityPack.HtmlAttribute)">
+            <summary>
+            Checks if the passed HTML attribute contains a valid URL.
+            </summary>
+            <param name="attribute"></param>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizer.UrlCheckHandler(HtmlAgilityPack.HtmlAttribute)">
+            <summary>
+            Checks if the attribute contains a valid link.
+            </summary>
+            <param name="attribute"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizer.Sanitize(System.String)">
+            <summary>
+            Sanitizes the passed HTML string and returns the sanitized HTML.
+            </summary>
+            <param name="html">A string containing HTML formatted text.</param>
+            <returns>A string containing sanitized HTML formatted text.</returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizer.SanitizeNode(HtmlAgilityPack.HtmlNode)">
+            <summary>Sanitizes the node.</summary>
+            <param name="node">The node.</param>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizer.ApplyNodeOperation(HtmlAgilityPack.HtmlNode,Vereyon.Web.SanitizerOperation)">
+            <summary>
+            Applies the specified operation to the specified node. Return false if the node was removed or does not need any futher processing.
+            </summary>
+            <param name="node"></param>
+            <param name="operation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizer.ApplyCssWhitelist(HtmlAgilityPack.HtmlAttribute)">
+            <summary>
+            Applies the CSS class white list to the passed attribute. Returns false if the complete attribute is removed.
+            </summary>
+            <param name="attribute"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizer.SimpleHtml5Sanitizer">
+            <summary>
+            Returns an instance of the HtmlSanitizer with a HTML5 compliant rule set for documents with simple markup.
+            </summary>
+            <remarks>Strips all CSS and only allows simple links. Enfores nofollow.</remarks>
+            <returns></returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizer.SimpleHtml5DocumentSanitizer">
+            <summary>
+            Equal to the SimpleHtml5Sanitizer but allows html and body declarations.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Vereyon.Web.HtmlSanitizerCheckType">
+            <summary>
+            Types of sanitizations.
+            </summary>
+        </member>
+        <member name="F:Vereyon.Web.HtmlSanitizerCheckType.Url">
+            <summary>
+            Checks if the passed HTML attribute contains a valid URL.
+            </summary>
+        </member>
+        <member name="F:Vereyon.Web.HtmlSanitizerCheckType.AllowAttribute">
+            <summary>
+            Specifies that this attribute is allowed and that it's value is not to be checked.
+            </summary>
+        </member>
+        <member name="T:Vereyon.Web.HtmlSanitizerFluentHelper">
+            <summary>
+            The HtmlSanitizerFluentHelper class implements fluent style extension methods for configuring the HtmlSanitizer.
+            </summary>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerFluentHelper.AllowCss(Vereyon.Web.HtmlSanitizer,System.String[])">
+            <summary>
+            White lists the specified CSS class names.
+            </summary>
+            <param name="sanitizer"></param>
+            <param name="classNames"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerFluentHelper.AllowCss(Vereyon.Web.HtmlSanitizer,System.String)">
+            <summary>White lists the specified space seperated CSS class names.</summary>
+            <param name="sanitizer">The sanitizer.</param>
+            <param name="classNames">The class names.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerFluentHelper.Tag(Vereyon.Web.HtmlSanitizer,System.String)">
+            <summary>
+            White lists the specified HTML tag, creating a rule for it which allows further specification of what is to be done
+            with the tag.
+            </summary>
+            <param name="sanitizer"></param>
+            <param name="tagName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerFluentHelper.Tag(Vereyon.Web.HtmlSanitizer,System.String,System.Boolean)">
+            <summary>
+            White lists the specified HTML tag, creating a rule for it which allows further specification of what is to be done
+            with the tag.
+            </summary>
+            <param name="sanitizer">The sanitizer.</param>
+            <param name="tagName">Name of the tag.</param>
+            <param name="replace">if set to <c>true</c> replace.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerFluentHelper.Remove(Vereyon.Web.HtmlSanitizerTagRule)">
+            <summary>
+            Removes the tag and it's contents of the tag matched by this rule.
+            </summary>
+            <param name="rule"></param>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerFluentHelper.Flatten(Vereyon.Web.HtmlSanitizerTagRule)">
+            <summary>
+            Removes the tag but preserves it's contents in place of the tag matched by this rule.
+            </summary>
+            <param name="rule"></param>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerFluentHelper.Operation(Vereyon.Web.HtmlSanitizerTagRule,Vereyon.Web.SanitizerOperation)">
+            <summary>
+            Applies the specified global operation to a tag matching this rule.
+            </summary>
+            <param name="rule"></param>
+            <param name="operation"></param>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerFluentHelper.Rename(Vereyon.Web.HtmlSanitizerTagRule,System.String)">
+            <summary>
+            Renames the tag to the specified tag name. Usefull for preserving content in unwanted HTML tags.
+            </summary>
+            <param name="rule"></param>
+            <param name="newName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerFluentHelper.SetAttribute(Vereyon.Web.HtmlSanitizerTagRule,System.String,System.String)">
+            <summary>
+            Specifies that the value of any attribute with the given name is to be set to the specified value.
+            </summary>
+            <param name="rule"></param>
+            <param name="attribute"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerFluentHelper.CheckAttribute(Vereyon.Web.HtmlSanitizerTagRule,System.String,Vereyon.Web.HtmlSanitizerCheckType)">
+            <summary>
+            Specifies that the given check is be performed on any attribute with the given name.
+            </summary>
+            <param name="rule"></param>
+            <param name="attribute"></param>
+            <param name="check"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerFluentHelper.AllowAttributes(Vereyon.Web.HtmlSanitizerTagRule,System.String)">
+            <summary>
+            Specifies that the specified space seperated list of attributes are allowed on this tag.
+            </summary>
+            <param name="rule"></param>
+            <param name="attributes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerFluentHelper.RemoveEmpty(Vereyon.Web.HtmlSanitizerTagRule)">
+            <summary>
+            Specifies that empty tags matching this rule should be removed.
+            </summary>
+            <param name="rule"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerFluentHelper.NoAttributes(Vereyon.Web.HtmlSanitizerTagRule,Vereyon.Web.SanitizerOperation)">
+            <summary>Specifies the operation to perform if this node does not have any attributes set.</summary>
+            <param name="rule">The rule.</param>
+            <param name="operation">The operation.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Vereyon.Web.HtmlSanitizerTagRule">
+            <summary>
+            The HtmlSanitizerTagRule class specifies how the ocurrence of it's associated HTML tag is to be handled. The mere
+            presence of an rule for a tag white lists the tag.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizerTagRule.TagName">
+            <summary>
+            Gets the HTML tag name this rule is to act upon.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizerTagRule.Operation">
+            <summary>
+            Gets / sets a global operation to be applied to this tag type.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizerTagRule.Flatten">
+            <summary>
+            Gets / sets if this tag should be removed while it's contents are preserved.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizerTagRule.RenameTag">
+            <summary>
+            Gets / sets to which name this tag should be renamed. Set to null to not rename the tag.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizerTagRule.SetClass">
+            <summary>
+            Gets / sets a string of CSS classes to be added to this tag.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizerTagRule.NoAttributesOperation">
+            <summary>
+            Gets / sets the operation to be performed on the tag if it does not have any attributes.
+            </summary>
+            <remarks>
+            Example usage includes flattening any link tags which had illegal urls, while still preserving their contents.
+            </remarks>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizerTagRule.SetAttributes">
+            <summary>
+            Sets which attributes should have their value set or overridden. Attribute name as key, value to set as value.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizerTagRule.CheckAttributes">
+            <summary>
+            Sets which checks to perform on which attributes. Attribute name as key, check type as value.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.HtmlSanitizerTagRule.RemoveEmpty">
+            <summary>
+            Gets / sets if empty instances of this tag should be removed.
+            </summary>
+        </member>
+        <member name="M:Vereyon.Web.HtmlSanitizerTagRule.#ctor(System.String)">
+            <summary>Initializes a new instance of the <see cref="T:Vereyon.Web.HtmlSanitizerTagRule"/> class.</summary>
+            <param name="tagName">Name of the tag.</param>
+        </member>
+        <member name="T:Vereyon.Web.SanitizerOperation">
+            <summary></summary>
+        </member>
+        <member name="F:Vereyon.Web.SanitizerOperation.DoNothing">
+            <summary>
+            Default operation. Does nothing.
+            </summary>
+        </member>
+        <member name="F:Vereyon.Web.SanitizerOperation.FlattenTag">
+            <summary>
+            Strip the tag while preserving it's contents.
+            </summary>
+        </member>
+        <member name="F:Vereyon.Web.SanitizerOperation.RemoveTag">
+            <summary>
+            Completely remove the tag and it's contents.
+            </summary>
+        </member>
+        <member name="F:Vereyon.Web.SanitizerOperation.RemoveAttribute">
+            <summary>
+            Removes only the attribute while preserving the tag itself.
+            </summary>
+        </member>
+        <member name="T:Vereyon.Web.IHtmlSanitizer">
+            <summary>
+            The IHtmlSanitizer interface defines an HTML sanitation interface for protecting against XSS attacks and for transforming
+            HTML formatted input.
+            </summary>
+        </member>
+        <member name="M:Vereyon.Web.IHtmlSanitizer.Sanitize(System.String)">
+            <summary>
+            Sanitizes the passed HTML string and returns the sanitized HTML.
+            </summary>
+            <param name="html">A string containing HTML formatted text.</param>
+            <returns>A string containing sanitized HTML formatted text.</returns>
+        </member>
+        <member name="T:Vereyon.Web.RecursionGuard">
+            <summary>
+            Helper class for preventing stack overflows due to excessive recursion.
+            </summary>
+        </member>
+        <member name="M:Vereyon.Web.RecursionGuard.#ctor(Vereyon.Web.HtmlSanitizer)">
+            <summary>Initializes a new instance of the <see cref="T:Vereyon.Web.RecursionGuard"/> class.</summary>
+            <param name="sanitizer">The sanitizer.</param>
+            <exception cref="T:System.InvalidOperationException">Maximum recursion depth execeeded.</exception>
+        </member>
+        <member name="M:Vereyon.Web.RecursionGuard.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="P:Vereyon.Web.RecursionGuard.Depth">
+            <summary>Gets the depth.</summary>
+            <value>The depth.</value>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helpers\Helpers.csproj", "{DB6FC1F6-2C37-41CF-AF62-97B3696ABE71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IO_HttpdLib", "IO_HttpdLib\IO_HttpdLib.csproj", "{BC53DD33-C2E6-4A4E-BAAE-962AEDDA17E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB6FC1F6-2C37-41CF-AF62-97B3696ABE71}.Debug|x64.ActiveCfg = Debug|x64
+		{DB6FC1F6-2C37-41CF-AF62-97B3696ABE71}.Debug|x64.Build.0 = Debug|x64
+		{DB6FC1F6-2C37-41CF-AF62-97B3696ABE71}.Release|x64.ActiveCfg = Release|x64
+		{DB6FC1F6-2C37-41CF-AF62-97B3696ABE71}.Release|x64.Build.0 = Release|x64
+		{BC53DD33-C2E6-4A4E-BAAE-962AEDDA17E4}.Debug|x64.ActiveCfg = Debug|x64
+		{BC53DD33-C2E6-4A4E-BAAE-962AEDDA17E4}.Debug|x64.Build.0 = Debug|x64
+		{BC53DD33-C2E6-4A4E-BAAE-962AEDDA17E4}.Release|x64.ActiveCfg = Release|x64
+		{BC53DD33-C2E6-4A4E-BAAE-962AEDDA17E4}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DBA3E284-E44D-4DED-A7B0-15D380FFF488}
+	EndGlobalSection
+EndGlobal
