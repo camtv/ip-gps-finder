@@ -29,6 +29,7 @@ namespace LocationLib
             }
             catch (Exception)
             {
+                //todo log exception
             }
 
             return ipCoordinates;
