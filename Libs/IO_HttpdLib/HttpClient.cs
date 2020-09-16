@@ -57,6 +57,7 @@ namespace HttpdLib
 
                     if (request != null)
                     {
+                        request.TcpClient = _client;
 						var response = new HttpResponse();
 
 						// Qua va il request HAndler

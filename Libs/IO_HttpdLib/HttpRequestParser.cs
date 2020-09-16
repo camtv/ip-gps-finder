@@ -36,7 +36,7 @@ namespace HttpdLib
 			var httpProtocol = tokens[2];
 
 			var uri = new Uri(url, UriKind.Relative);
-
+		
 			var Headers = new KeyValueArray();
 
 			// get the headers

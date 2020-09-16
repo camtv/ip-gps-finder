@@ -5,6 +5,7 @@ using System.IO;
 using Helpers;
 using System.Web;
 using System.Collections.Specialized;
+using System.Net;
 
 namespace HttpdLib
 {
@@ -315,7 +316,9 @@ namespace HttpdLib
 				Host = Types.ToString(GetServerInputParam("Host"));
 				RequestURI = LowLevelRequest.Uri.ToString();
 				ContentType = Types.ToString(GetServerInputParam("Content-Type"));
-				
+				var ipe = (IPEndPoint)(LowLevelRequest.TcpClient.RemoteEndPoint);
+				RemoteAddr = IPAddress.Parse((ipe).Address.ToString()).ToString();
+
 				// Gestisce il caso del redirect da dominio esterno per canale o cobrand
 				if (Params.Server["HTTP_X_DOMAIN"] != null)
 					Host = Params.Server["HTTP_X_DOMAIN"];

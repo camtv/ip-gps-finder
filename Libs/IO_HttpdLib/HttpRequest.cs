@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 
 namespace HttpdLib
 {
@@ -8,6 +9,7 @@ namespace HttpdLib
         public String Method = "";
 		public String Protocol ="";
         public Uri Uri;
+        public TcpClientAdapter TcpClient;
         public byte[] Body = new byte[0];
 
         public HttpRequest(KeyValueArray headers, String method, string protocol, Uri uri, byte[] body)
