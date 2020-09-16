@@ -19,8 +19,11 @@ namespace CamTV
 		{
 			try
 			{
-				String sAuthHeader = Types.ToString(Request.Params.Server["Authorization"], Types.ToString(Request.Params.Server["authorization"]));
-				Int64 UserID = Types.ToInt64(sAuthHeader.Replace("Bearer ", ""), -1);
+				// AUTH: Disabilitata per semplicità
+				Int64 UserID = 1;
+
+				//String sAuthHeader = Types.ToString(Request.Params.Server["Authorization"], Types.ToString(Request.Params.Server["authorization"]));
+				//Int64 UserID = Types.ToInt64(sAuthHeader.Replace("Bearer ", ""), -1);
 
 				return UserID;
 			}
@@ -35,6 +38,7 @@ namespace CamTV
 		[HTTPMethod(Public = true, Type = CRequest.Method.GET)]
 		void Health()
 		{
+			// AUTH: Disabilitata per semplicità
 			//String sAuthHeader = Types.ToString(Request.Params.Server["Authorization"], Types.ToString(Request.Params.Server["authorization"])).Replace("Bearer ", "");
 			//if (sAuthHeader != Sets.API_KEY)
 			//	ThrowError(HTTPStatusCode.Unauthorized_401, "Authorization Bearer != Sets.API_KEY - Remote IP:"+ Request.RemoteAddr);
@@ -47,11 +51,11 @@ namespace CamTV
 		void GetIp()
 		{
 			// Fase 1 - Verifica parametri ed acquisizione
-			String MissingParameter = CheckMissingParams(new String[] { "Path" });
+			String MissingParameter = CheckMissingParams(new String[] { "Parameter" });
 			if (MissingParameter != null)
 				ThrowError(HTTPStatusCode.Bad_Request_400, MissingParameter);
 
-			String sPath = Types.ToString(Params["Path"]);
+			String sParameter = Types.ToString(Params["Parameter"]);
 			Int64 nLimitStart = Types.ToInt64(Params["LimitStart"],0);
 			Int64 nLimitCounts = Types.ToInt64(Params["LimitCount"],30);
 
