@@ -21,11 +21,13 @@ namespace LocationLib
             var ipCoordinates = new IpCoordinates();
             try
             {
-                var client = new HttpClient();
-                client.BaseAddress = new Uri(_baseUrl);
-                var response = client.GetAsync($"{ip}?access_key={_accessKey}&format=1").Result;
-                var result = response.Content.ReadAsStringAsync().Result;
-                ipCoordinates = JsonConvert.DeserializeObject<IpCoordinates>(result);
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(_baseUrl);
+                    var response = client.GetAsync($"{ip}?access_key={_accessKey}&format=1").Result;
+                    var result = response.Content.ReadAsStringAsync().Result;
+                    ipCoordinates = JsonConvert.DeserializeObject<IpCoordinates>(result);
+                }
             }
             catch (Exception)
             {
