@@ -9,6 +9,13 @@ namespace CamTV
 {
 	public class Locations
 	{
+		// TODO: 
+		//  - Creare un database
+		//  - Creare una tabella delle Locations
+		//  - Creare una interfaccia CRUD su Locations
+		//  - Esporre gli endpoit per l'interfaccia CRUD sulla API
+		//  - Testarla e documentarla su Postman
+
 		public class TLocation
 		{
 			public Int64 ID;
