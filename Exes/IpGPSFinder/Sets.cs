@@ -37,5 +37,10 @@ namespace Helpers
 		public static int IPGPS_API_MAX_CONN_POOL;
 		[INIProperty()]
 		public static String IPGPS_API_KEY_SECRET;
+
+		[INIProperty()]
+		public static String LOCATION_API_BASE_URL;
+		[INIProperty()]
+		public static String LOCATION_API_KEY_SECRET;
 	}
 }

@@ -1,81 +1,91 @@
 using Helpers;
 using HttpdLib;
-using Newtonsoft.Json;
+using LocationLib;
 using System;
-using System.Runtime.Remoting.Messaging;
+using System.Device.Location;
 
 namespace CamTV
 {
-	public class IpGPSFinderApi : CApiServer
-	{
-		public IpGPSFinderApi()
-		{
-			SetEndPointHandler("/api/ipgpsfinder/v1/health", Health);
+    public class IpGPSFinderApi : CApiServer
+    {
+        public IpGPSFinderApi()
+        {
+            SetEndPointHandler("/api/ipgpsfinder/v1/health", Health);
 
-			SetEndPointHandler("/api/ipgpsfinder/v1/getip", GetIp);
-		}
+            SetEndPointHandler("/api/ipgpsfinder/v1/getip", GetIp);
 
-		override protected Int64 ValidateSession()
-		{
-			try
-			{
-				// AUTH: Disabilitata per semplicità
-				Int64 UserID = 1;
+            SetEndPointHandler("/api/ipgpsfinder/v1/getdistance", GetDistance);
+        }
 
-				//String sAuthHeader = Types.ToString(Request.Params.Server["Authorization"], Types.ToString(Request.Params.Server["authorization"]));
-				//Int64 UserID = Types.ToInt64(sAuthHeader.Replace("Bearer ", ""), -1);
+        override protected Int64 ValidateSession()
+        {
+            try
+            {
+                // AUTH: Disabilitata per semplicità
+                Int64 UserID = 1;
 
-				return UserID;
-			}
-			catch (Exception Ex)
-			{
-				LogHelper.Error("Exception: {0}", Ex.Message);
-			}
+                //String sAuthHeader = Types.ToString(Request.Params.Server["Authorization"], Types.ToString(Request.Params.Server["authorization"]));
+                //Int64 UserID = Types.ToInt64(sAuthHeader.Replace("Bearer ", ""), -1);
 
-			return -1;
-		}
+                return UserID;
+            }
+            catch (Exception Ex)
+            {
+                LogHelper.Error("Exception: {0}", Ex.Message);
+            }
 
-		[HTTPMethod(Public = true, Type = CRequest.Method.GET)]
-		void Health()
-		{
-			// AUTH: Disabilitata per semplicità
-			//String sAuthHeader = Types.ToString(Request.Params.Server["Authorization"], Types.ToString(Request.Params.Server["authorization"])).Replace("Bearer ", "");
-			//if (sAuthHeader != Sets.API_KEY)
-			//	ThrowError(HTTPStatusCode.Unauthorized_401, "Authorization Bearer != Sets.API_KEY - Remote IP:"+ Request.RemoteAddr);
+            return -1;
+        }
 
-			Body = "WORKING";   // Aggiungere dati di info sullo status del processo
-			StatusCode = HTTPStatusCode.OK_200;
-		}
+        [HTTPMethod(Public = true, Type = CRequest.Method.GET)]
+        void Health()
+        {
+            // AUTH: Disabilitata per semplicità
+            //String sAuthHeader = Types.ToString(Request.Params.Server["Authorization"], Types.ToString(Request.Params.Server["authorization"])).Replace("Bearer ", "");
+            //if (sAuthHeader != Sets.API_KEY)
+            //	ThrowError(HTTPStatusCode.Unauthorized_401, "Authorization Bearer != Sets.API_KEY - Remote IP:"+ Request.RemoteAddr);
+            String IpRemoteIP = "37.159.89.57";//this.Request.RemoteAddr;
 
-		[HTTPMethod(Public = false, Type = CRequest.Method.POST)]
-		void GetIp()
-		{
-			// Fase 1 - Verifica parametri ed acquisizione
-			String MissingParameter = CheckMissingParams(new String[] { "Parameter" });
-			if (MissingParameter != null)
-				ThrowError(HTTPStatusCode.Bad_Request_400, MissingParameter);
+            Body = "WORKING";   // Aggiungere dati di info sullo status del processo
+            StatusCode = HTTPStatusCode.OK_200;
+        }
 
-			String sParameter = Types.ToString(Params["Parameter"]);
-			Int64 nLimitStart = Types.ToInt64(Params["LimitStart"],0);
-			Int64 nLimitCounts = Types.ToInt64(Params["LimitCount"],30);
+        [HTTPMethod(Public = true, Type = CRequest.Method.POST)]
+        void GetIp()
+        {
+            //todo solo per debugging, successivamente leggere il parametro tramite Params["HTTP_X_REMOTE_ADDR"]
+            String ipRemoteIP = "87.9.232.109";
+            var locationUtils = new LocationUtils();
+            locationUtils.SetParameters(Sets.LOCATION_API_BASE_URL, Sets.LOCATION_API_KEY_SECRET);
+            var ipCoordinates = locationUtils.GetCoordinates(ipRemoteIP);
 
-			// Fase 2 - Chiamata al modello dati
+            Body = new
+            {
+                ipCoordinates
+            };
+            StatusCode = HTTPStatusCode.OK_200;
+        }
 
+        [HTTPMethod(Public = true, Type = CRequest.Method.POST)]
+        void GetDistance()
+        {
+            String MissingParameter = CheckMissingParams(new String[] { "LatA", "LonA", "LatB", "LonB" });
+            if (MissingParameter != null)
+                ThrowError(HTTPStatusCode.Bad_Request_400, MissingParameter);
 
-			// Fase 3 - [Optional] Condizionamento dei prametri di out
+            var latA = Types.ToDouble(Params["LatA"], 0);
+            var lonA = Types.ToDouble(Params["LonA"], 0);
+            var latB = Types.ToDouble(Params["LatB"], 0);
+            var lonB = Types.ToDouble(Params["LonB"], 0);
 
-			// Fase 4 - Output
-			Body = new
-			{
-				IP = "",
-				GPS = new
-				{
-					lat = 0,
-					lon = 0
-				}
-			};
-			StatusCode = HTTPStatusCode.OK_200;
-		}
+            var locationUtils = new LocationUtils();
+            var distance = locationUtils.GetDistance(latA, lonA, latB, lonB);
 
-	}
+            Body = new
+            {
+                Distance = distance
+            };
+            StatusCode = HTTPStatusCode.OK_200;
+        }
+    }
 }

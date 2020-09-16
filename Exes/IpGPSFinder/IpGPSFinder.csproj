@@ -111,6 +111,10 @@
       <Project>{bc53dd33-c2e6-4a4e-baae-962aedda17e4}</Project>
       <Name>IO_HttpdLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libs\LocationLib\LocationLib.csproj">
+      <Project>{91fa7016-88cd-48eb-a07b-92bef545ffde}</Project>
+      <Name>LocationLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="HtmlAgilityPack, Version=1.11.24.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
@@ -119,6 +123,7 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Device" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="IpGPSFinder.ico" />
