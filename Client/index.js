@@ -1,5 +1,5 @@
 import { LitElement, html, css, customElement, property } from 'lit-element';
-import "index.scss";
+import "./index.scss";
 
 export class MapComponent extends LitElement {
 
@@ -21,7 +21,7 @@ export class MapComponent extends LitElement {
     render() {
             return html`                
                 <div>
-                    Componente mappa                    
+                    Componente mappa  ${this.prop}                   
                 </div>  
             `;
     }
