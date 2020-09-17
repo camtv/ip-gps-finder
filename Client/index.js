@@ -24,19 +24,23 @@ export class MapComponent extends LitElement {
                 zoom: 13,
                 streetViewControl: false,
               });
-              this._putMarkersOnMap(this.locations);
+              this._drawCustomMarkers(this.locations);
         })
 
         this.locations  = [
             {
               position: {lat:46.067952, lng:13.235577},
               InfoWindowContent: "<h3>Udine</h3>",
-              Description: "Udine"
+              Name: "Udine",
+              Description: "La città di Udine",
+              Url: "http://www.google1.it"
             },
             {
                 position: {lat:45.964525, lng:12.663983},
                 InfoWindowContent: "<h3>Pordenone</h3>",
-                Description: "Pordenone"
+                Name: "Pordenone",
+                Description: "La città di Pordenone",
+                Url: "http://www.google2.it"
               }
           ]
 
@@ -47,44 +51,21 @@ export class MapComponent extends LitElement {
         super.firstUpdated();
     }
 
-    _putMarkersOnMap(markers) {
-
-        if(!this._mapRef || !markers) return;
-        if(this._locations) this._locations.map((marker) => marker.setMap(null));
-        this._locations = markers.reduce((acc, item, index) => {
-          if(item.position){
-            const mapMarker = new google.maps.Marker({
-              position: item.position,
-              icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/info-i_maps.png',
-              map: this._mapRef
-            })
-            mapMarker.addListener('click', () => {
-              this.selectedMarkerId = item.id || index;
-              alert(`${item.Description} : LAT ${item.position.lat} / LNG ${item.position.lng}`)
-            });
-            acc[ item.id || index ] = mapMarker;
-            return acc;
-          }
-          return acc;
-        }, []);
-        this._setDefaultBounds ();
-      }
-
-      _setDefaultBounds () {
-        if (this.locations.length === 0) {
-          var worldBounds = new google.maps.LatLngBounds(
-            new google.maps.LatLng(70.4043, -143.5291),
-            new google.maps.LatLng(-46.11251, 163.4288)
-          );
-          this._mapRef.fitBounds(worldBounds, 0);
-        } else {
-          var initialBounds = this.locations.reduce((bounds, marker) => {
-            bounds.extend(new google.maps.LatLng(marker.position.lat, marker.position.lng));
-            return bounds;
-          }, new google.maps.LatLngBounds());
-          this._mapRef.fitBounds(initialBounds);
-        }
-      }
+    _setDefaultBounds () {
+    if (this.locations.length === 0) {
+        var worldBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(70.4043, -143.5291),
+        new google.maps.LatLng(-46.11251, 163.4288)
+        );
+        this._mapRef.fitBounds(worldBounds, 0);
+    } else {
+        var initialBounds = this.locations.reduce((bounds, marker) => {
+        bounds.extend(new google.maps.LatLng(marker.position.lat, marker.position.lng));
+        return bounds;
+        }, new google.maps.LatLngBounds());
+        this._mapRef.fitBounds(initialBounds);
+    }
+    }
 
     _mapScriptTag() {
         const googleMapsLoader = document.createElement('script');
@@ -92,6 +73,62 @@ export class MapComponent extends LitElement {
         googleMapsLoader.async = true;
         googleMapsLoader.defer = true;
         return googleMapsLoader;
+    }
+
+    _drawCustomMarkers(locations) {
+        
+        function addCustomMarker(map, location) {
+            
+            function HTMLMarker(location) {
+                this.url = location.Url;
+                this.name = location.Name;
+                this.description = location.Description;
+                this.pos = new google.maps.LatLng(location.position.lat, location.position.lng);
+            }
+    
+            HTMLMarker.prototype = new google.maps.OverlayView();
+
+            HTMLMarker.prototype.onRemove = function () {}
+
+            HTMLMarker.prototype.onAdd = function () {
+                this.div = document.createElement("div");
+                this.div.style.position = "absolute";
+                this.div.className = "htmlMarker";
+                this.div.data = "data-price";
+                this.image = document.createElement("img");
+                this.image.src = "https://miro.medium.com/max/625/0*-ouKIOsDCzVCTjK-.png"
+                this.div.appendChild(this.image);
+                this.nameSpan = document.createElement("span");
+                this.nameSpan.innerHTML = this.name;
+                this.div.appendChild(this.nameSpan);
+                this.descSpan = document.createElement("span");
+                this.descSpan.innerHTML = this.description;
+                this.div.appendChild(this.descSpan);
+                this.link = document.createElement("a");
+                this.link.href = this.url; 
+                this.link.text = this.name;
+                this.div.appendChild(this.link);
+                var panes = this.getPanes();
+                panes.overlayImage.appendChild(this.div);
+            }
+    
+            HTMLMarker.prototype.draw = function () {
+                var overlayProjection = this.getProjection();
+                var position = overlayProjection.fromLatLngToDivPixel(this.pos);
+                this.div.style.left = position.x - 60 + 'px';
+                this.div.style.top = position.y - 80 + 'px';
+            }
+    
+            var htmlMarker = new HTMLMarker(location);
+    
+            htmlMarker.setMap(map);
+        }
+
+        for (var i = 0; i < locations.length; i++) {
+            addCustomMarker(this._mapRef,locations[i]);
+        }
+
+        this._setDefaultBounds ();
     }
 
     static get styles() {
@@ -106,6 +143,23 @@ export class MapComponent extends LitElement {
             #map {
                 width: 100wv;
                 height: 100vh;
+            }
+            .htmlMarker {
+                width:120px;
+                background-color:#ffffff;
+                padding:2px 5px;
+                border-radius: 2px;
+                border: 1px solid #cccccc;
+            }
+
+            .htmlMarker a, .htmlMarker span {
+                display:block;
+            }
+
+            .htmlMarker img {
+                width:30px;
+                height: auto;
+                clear:both;
             }
         `
     }
