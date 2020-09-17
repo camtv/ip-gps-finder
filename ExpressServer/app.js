@@ -7,7 +7,7 @@ var cors = require('cors')
 app.use(cors())
 
 const options = {
-  host: '192.168.10.201',
+  host: '127.0.0.1',
   port: 15301,
   path: '/api/ipgpsfinder/v1/locations/list',
   headers: {
