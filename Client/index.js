@@ -1,6 +1,5 @@
 import { LitElement, html, css, customElement, property } from 'lit-element';
 import "./index.scss";
-import "google-maps-limited/google-maps-limited.js";
 
 window.initMap = function () { window.dispatchEvent(new CustomEvent('google-map-ready')); };
 

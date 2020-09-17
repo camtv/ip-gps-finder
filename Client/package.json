@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "google-maps-limited": "^1.0.0",
     "lit-element": "^2.4.0"
   },
   "devDependencies": {
