@@ -28,7 +28,7 @@ export class MapComponent extends LitElement {
     render() {
             return html`                
                 <div>
-                    Componente mappa  ${this.nome_proprieta}                   
+                    Componente mappa: ${this.nome_proprieta}                   
                 </div>  
             `;
     }
