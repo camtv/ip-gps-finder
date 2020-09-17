@@ -49,6 +49,19 @@ export class MapComponent extends LitElement {
     firstUpdated() {
         this.shadowRoot.appendChild(this._mapScriptTag());
         super.firstUpdated();
+        fetch('http://127.0.0.1:3000')
+			.then((res) => {
+				return res.json();
+			})
+			.then((res) => {
+				this.locations = res.map(x => ({
+                    position: {lat:x.Latitude, lng:x.Longitude},
+                    InfoWindowContent: `<h3>${x.Description}</h3>`,
+                    Name: x.Description,
+                    Description: "Descrizione della città",
+                    Url: `http://www.${x.Description}.it`
+                }));
+			});
     }
 
     _setDefaultBounds () {
