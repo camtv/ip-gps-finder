@@ -113,7 +113,7 @@ namespace CamTV
             StatusCode = HTTPStatusCode.OK_200;
         }
 
-        [HTTPMethod(Public = true, Type = CRequest.Method.POST)]
+        [HTTPMethod(Public = true, Type = CRequest.Method.GET)]
         void List()
         {
             var vLocations = Locations.List(Db);
