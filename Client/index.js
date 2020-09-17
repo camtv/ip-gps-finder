@@ -27,23 +27,7 @@ export class MapComponent extends LitElement {
               this._drawCustomMarkers(this.locations);
         })
 
-        this.locations  = [
-            {
-              position: {lat:46.067952, lng:13.235577},
-              InfoWindowContent: "<h3>Udine</h3>",
-              Name: "Udine",
-              Description: "La città di Udine",
-              Url: "http://www.google1.it"
-            },
-            {
-                position: {lat:45.964525, lng:12.663983},
-                InfoWindowContent: "<h3>Pordenone</h3>",
-                Name: "Pordenone",
-                Description: "La città di Pordenone",
-                Url: "http://www.google2.it"
-              }
-          ]
-
+        this.locations  = []
     }
 
     firstUpdated() {
